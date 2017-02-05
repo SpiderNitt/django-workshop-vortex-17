@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Star Grocery</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/titillium.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    <br><br><br>
+    <div class="form">
+      {% if success == 0 %}
+        <p><font color="red">Passwords do not match !</font></p>
+      {% elif success == 1 %}
+        <p><font color="green">Registered successfully !</font></p>
+      {% elif success == 2 %}
+        <p><font color="red">User already registered</font></p>  
+      {% endif %}    
+      {% if auth == -2 %}
+        <p><font color="red">Invalid credentials / User does not exist</font></p>
+      {% endif %}  
+      <ul class="tab-group">
+        <li class="tab active"><a href="#signup">Sign Up</a></li>
+        <li class="tab"><a href="#login">Log In</a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="signup">   
+          <h1>REGISTER</h1>
+          <form action="/users/register" method="post">{% csrf_token %}
+            <div class="field-wrap">
+              <label>Name<span class="req">*</span></label>
+              <input type="text" name="name" id="name" required autocomplete="off"/>
+            </div>
+            <div class="field-wrap">
+              <label>Username<span class="req">*</span></label>
+              <input type="text"  name="username" id="username" required autocomplete="off"/>
+            </div>
+
+            <input type="hidden" name="option_hidden" value="C" id="option_hidden" />
+
+            <div class="top-row">
+            <select class="selectpicker">
+              <option value="C">Cashier</option>
+              <option value="M">Manager</option>
+            </select>  
+            </div>
+
+            <br><br>
+
+            <div class="top-row">
+              <div class="field-wrap">
+                <label>Password<span class="req">*</span></label>
+                <input type="password" name="password" id="password" required autocomplete="off" />
+              </div>
+              <div class="field-wrap">
+                <label>Confirm Password<span class="req">*</span></label>
+                <input type="password" name="pwdcnf" id="pwdcnf" required autocomplete="off"/>
+              </div>
+            </div>
+            
+            <button type="submit" class="button button-block">Register</button>
+          </form>
+        </div>
+        
+        <div id="login">   
+          <h1>LOGIN</h1>
+          <form action="/users/login" method="post">{% csrf_token %}
+            <div class="field-wrap">
+              <label>Username<span class="req">*</span></label>
+              <input type="text" name="login_username" id="login_username" required/>
+            </div>
+            <div class="field-wrap">
+              <label>Password<span class="req">*</span></label>
+              <input type="password" name="login_password" id="login_password" required autocomplete="off"/>
+            </div>
+            <button type="submit" class="button button-block"/>Log In</button>
+          </form>
+        </div>
+
+      </div><!-- tab-content -->
+    </div>
+    
+    <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script type="text/javascript">
+      $('select').on('change', function() {
+        document.getElementById("option_hidden").value = this.value; 
+    })
+    </script>
+  </body>
+</html>

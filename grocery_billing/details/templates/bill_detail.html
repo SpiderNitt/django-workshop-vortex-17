@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>  
+    <meta charset="UTF-8" />
+    <title>Bill details</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+	</head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+          <br>
+          <a href="/users/dashboard">Back to dashboard</a>
+        </div>
+        <div class="col-md-8 text-center">
+          <h1>Bill Details for ID {{ id }}</h1>
+        </div>
+      </div>
+
+      <div class="row" style="border: 2px solid black;">
+            <div class="col-md-5 col-md-offset-1">
+                {% if customerName != "NA" %}
+                    <div class="row">
+                      <p>Customer ID : {{ customerId }}</p>
+                    </div>
+                    <div class="row">
+                        <p>{{ customerName }}</p>
+                    </div>
+                {% else %}
+                  <div class="row">
+                    <p>Unregistered Customer</p>
+                  </div>
+                {% endif %}
+            </div>
+            <div class="col-md-2 col-md-offset-4">
+                <div class="row">
+                    <p>Cashier ID : {{ cashierId }}</p>
+                </div>
+                <div class="row">
+                    <p>Cashier Name : {{ cashierName }}</p>
+                </div>
+                <div class="row">
+                    <p>Date : {{ date }}</p>
+                </div>
+            </div>
+      </div>
+      <div class="row">
+            <div class="col-md-12">
+                <table class="table table-borderless" id="table1">
+                    <thead>
+                        <tr class="row">
+                            <th class="prop__name col-md-2 text-center" data-prop-name='itemId'>Item ID</th>
+                            <th class="prop__name col-md-6 text-center" data-prop-name='itemName'>Item Name</th> 
+                            <th class="prop__name col-md-2 text-center" data-prop-name='qtyPurchased'>Quantity Purchased</th>
+                            <th class="prop__name col-md-2 text-center" data-prop-name='amount'>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for id,name,qty,amount in details %}
+                        <tr class="row">
+                            <td class="col-md-2 text-center">{{ id }}</td>
+                            <td class="col-md-6 text-center">{{ name }}</td> 
+                            <td class="col-md-2 text-center">{{ qty }}</td>
+                            <td class="col-md-2 text-center">{{ amount }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+      </div>
+      <div class="row">
+            <div class="col-md-3 col-md-offset-7 text-center">
+                <h2>Total : </h2>
+            </div>
+            <div class="col-md-2 text-center">
+                <h2>{{ total }}</h2>
+            </div>
+      </div>
+    </div>
+</body>
+</html>
